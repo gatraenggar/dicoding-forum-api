@@ -17,6 +17,17 @@ DomainErrorTranslator._directories = {
   'REFRESH_AUTHENTICATION_USE_CASE.PAYLOAD_NOT_MEET_DATA_TYPE_SPECIFICATION': new InvariantError('refresh token harus string'),
   'DELETE_AUTHENTICATION_USE_CASE.NOT_CONTAIN_REFRESH_TOKEN': new InvariantError('harus mengirimkan token refresh'),
   'DELETE_AUTHENTICATION_USE_CASE.PAYLOAD_NOT_MEET_DATA_TYPE_SPECIFICATION': new InvariantError('refresh token harus string'),
+
+  'PRETHREAD.NOT_CONTAIN_NEEDED_PROPERTY': new InvariantError('tidak dapat membuat thread baru karena properti yang dibutuhkan tidak ada'),
+  'PRETHREAD.NOT_MEET_DATA_TYPE_SPECIFICATION': new InvariantError('tidak dapat membuat thread baru karena tipe data tidak sesuai'),
+  'PRETHREAD.TITLE_LIMIT_CHAR': new InvariantError('tidak dapat membuat thread baru karena karakter title melebihi batas limit'),
+
+  'POSTTHREAD.NOT_CONTAIN_NEEDED_PROPERTY': new InvariantError('harus mengirimkan id, owner, dan title'),
+  'POSTTHREAD.TITLE_LIMIT_CHAR': new InvariantError('tidak dapat menghasilkan thread baru karena karakter title melebihi batas limit'),
+  'POSTTHREAD.NOT_MEET_DATA_TYPE_SPECIFICATION': new InvariantError('id, owner, dan title harus string'),
+
+  'ADD_THREAD_USE_CASE.NOT_CONTAIN_ACCESS_TOKEN': new InvariantError('harus mengirimkan token access'),
+  'ADD_THREAD_USE_CASE.AUTH_NOT_MEET_DATA_TYPE_SPECIFICATION': new InvariantError('tidak dapat membuat thread baru karena tipe data token tidak sesuai'),
 };
 
 module.exports = DomainErrorTranslator;
