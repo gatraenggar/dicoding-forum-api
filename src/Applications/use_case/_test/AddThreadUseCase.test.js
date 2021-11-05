@@ -1,4 +1,4 @@
-const Thread = require('../../../Domains/threads/entities/PreThread');
+const PreThread = require('../../../Domains/threads/entities/PreThread');
 const ThreadRepository = require('../../../Domains/threads/ThreadRepository');
 const AddThreadUseCase = require('../AddThreadUseCase');
 const AuthenticationTokenManager = require('../../security/AuthenticationTokenManager');
@@ -51,7 +51,7 @@ describe('AddThreadUseCase', () => {
       username: 'dicoding',
       id: 'user-123',
     };
-    const expectedThread = new Thread({
+    const expectedThread = new PreThread({
       owner: 'user-123',
       title: useCasePayload.title,
       body: useCasePayload.body,
@@ -75,7 +75,7 @@ describe('AddThreadUseCase', () => {
 
     // eslint-disable-next-line max-len
     expect(mockAuthenticationTokenManager.decodePayload).toBeCalledWith(useCaseAuth.artifacts.token);
-    expect(mockThreadRepository.addThread).toBeCalledWith(new Thread({
+    expect(mockThreadRepository.addThread).toBeCalledWith(new PreThread({
       owner: decodedAuth.id,
       title: useCasePayload.title,
       body: useCasePayload.body,

@@ -28,6 +28,15 @@ DomainErrorTranslator._directories = {
 
   'ADD_THREAD_USE_CASE.NOT_CONTAIN_ACCESS_TOKEN': new InvariantError('harus mengirimkan token access'),
   'ADD_THREAD_USE_CASE.AUTH_NOT_MEET_DATA_TYPE_SPECIFICATION': new InvariantError('tidak dapat membuat thread baru karena tipe data token tidak sesuai'),
+
+  'PRECOMMENT.NOT_CONTAIN_NEEDED_PROPERTY': new InvariantError('tidak dapat membuat comment baru karena properti yang dibutuhkan tidak ada'),
+  'PRECOMMENT.NOT_MEET_DATA_TYPE_SPECIFICATION': new InvariantError('tidak dapat membuat comment baru karena tipe data tidak sesuai'),
+
+  'POSTCOMMENT.NOT_CONTAIN_NEEDED_PROPERTY': new InvariantError('harus mengirimkan id, owner, dan content'),
+  'POSTCOMMENT.NOT_MEET_DATA_TYPE_SPECIFICATION': new InvariantError('id, owner, dan content harus string'),
+
+  'ADD_COMMENT_USE_CASE.NOT_CONTAIN_ACCESS_TOKEN': new InvariantError('harus mengirimkan token access'),
+  'ADD_COMMENT_USE_CASE.AUTH_NOT_MEET_DATA_TYPE_SPECIFICATION': new InvariantError('tidak dapat membuat comment baru karena tipe data token tidak sesuai'),
 };
 
 module.exports = DomainErrorTranslator;

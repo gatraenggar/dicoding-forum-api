@@ -1,7 +1,7 @@
 /* eslint-disable max-len */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable class-methods-use-this */
-const Thread = require('../../Domains/threads/entities/PreThread');
+const PreThread = require('../../Domains/threads/entities/PreThread');
 
 class AddThreadUseCase {
   constructor({ threadRepository, authenticationTokenManager }) {
@@ -13,7 +13,7 @@ class AddThreadUseCase {
     this._validateAuth(useCaseAuth.artifacts);
     const { id } = await this._authenticationTokenManager.decodePayload(useCaseAuth.artifacts.token);
 
-    const thread = this._threadRepository.addThread(new Thread({
+    const thread = this._threadRepository.addThread(new PreThread({
       owner: id,
       title: useCasePayload.title,
       body: useCasePayload.body,
