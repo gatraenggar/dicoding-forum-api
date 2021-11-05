@@ -4,7 +4,7 @@ const ThreadsTableTestHelper = require('../../../../tests/ThreadsTableTestHelper
 const container = require('../../container');
 const createServer = require('../createServer');
 
-describe('/users endpoint', () => {
+describe('/threads endpoint', () => {
   afterAll(async () => {
     await pool.end();
   });
