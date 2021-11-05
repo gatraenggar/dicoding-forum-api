@@ -19,7 +19,7 @@ describe('/authentications endpoint', () => {
     it('should response 201 and new authentication', async () => {
       // Arrange
       const requestPayload = {
-        username: 'dicoding',
+        username: 'antasari',
         password: 'secret',
       };
       const server = await createServer(container);
@@ -28,7 +28,7 @@ describe('/authentications endpoint', () => {
         method: 'POST',
         url: '/users',
         payload: {
-          username: 'dicoding',
+          username: 'antasari',
           password: 'secret',
           fullname: 'Dicoding Indonesia',
         },
@@ -52,7 +52,7 @@ describe('/authentications endpoint', () => {
     it('should response 400 if username not found', async () => {
       // Arrange
       const requestPayload = {
-        username: 'dicoding',
+        username: 'mohyamin',
         password: 'secret',
       };
       const server = await createServer(container);
@@ -74,7 +74,7 @@ describe('/authentications endpoint', () => {
     it('should response 401 if password wrong', async () => {
       // Arrange
       const requestPayload = {
-        username: 'dicoding',
+        username: 'diponegoro',
         password: 'wrong_password',
       };
       const server = await createServer(container);
@@ -83,7 +83,7 @@ describe('/authentications endpoint', () => {
         method: 'POST',
         url: '/users',
         payload: {
-          username: 'dicoding',
+          username: 'diponegoro',
           password: 'secret',
           fullname: 'Dicoding Indonesia',
         },
@@ -106,7 +106,7 @@ describe('/authentications endpoint', () => {
     it('should response 400 if login payload not contain needed property', async () => {
       // Arrange
       const requestPayload = {
-        username: 'dicoding',
+        username: 'agussalim',
       };
       const server = await createServer(container);
 
@@ -156,7 +156,7 @@ describe('/authentications endpoint', () => {
         method: 'POST',
         url: '/users',
         payload: {
-          username: 'dicoding',
+          username: 'nyiagengserang',
           password: 'secret',
           fullname: 'Dicoding Indonesia',
         },
@@ -166,7 +166,7 @@ describe('/authentications endpoint', () => {
         method: 'POST',
         url: '/authentications',
         payload: {
-          username: 'dicoding',
+          username: 'nyiagengserang',
           password: 'secret',
         },
       });

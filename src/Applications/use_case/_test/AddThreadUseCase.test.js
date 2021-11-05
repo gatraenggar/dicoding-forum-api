@@ -48,7 +48,7 @@ describe('AddThreadUseCase', () => {
       },
     };
     const decodedAuth = {
-      username: 'dicoding',
+      username: 'haaland',
       id: 'user-123',
     };
     const expectedThread = new PreThread({

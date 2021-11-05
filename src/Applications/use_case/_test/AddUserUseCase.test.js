@@ -11,7 +11,7 @@ describe('AddUserUseCase', () => {
   it('should orchestrating the add user action correctly', async () => {
     // Arrange
     const useCasePayload = {
-      username: 'dicoding',
+      username: 'pakjoko',
       password: 'secret',
       fullname: 'Dicoding Indonesia',
     };

@@ -37,7 +37,7 @@ describe('UserRepositoryPostgres', () => {
     it('should persist register user and return registered user correctly', async () => {
       // Arrange
       const registerUser = new RegisterUser({
-        username: 'dicoding',
+        username: 'gutenberg',
         password: 'secret_password',
         fullname: 'Dicoding Indonesia',
       });
@@ -55,7 +55,7 @@ describe('UserRepositoryPostgres', () => {
     it('should return registered user correctly', async () => {
       // Arrange
       const registerUser = new RegisterUser({
-        username: 'dicoding',
+        username: 'newton',
         password: 'secret_password',
         fullname: 'Dicoding Indonesia',
       });
@@ -68,7 +68,7 @@ describe('UserRepositoryPostgres', () => {
       // Assert
       expect(registeredUser).toStrictEqual(new RegisteredUser({
         id: 'user-123',
-        username: 'dicoding',
+        username: 'newton',
         fullname: 'Dicoding Indonesia',
       }));
     });
@@ -89,12 +89,12 @@ describe('UserRepositoryPostgres', () => {
       // Arrange
       const userRepositoryPostgres = new UserRepositoryPostgres(pool, {});
       await UsersTableTestHelper.addUser({
-        username: 'dicoding',
+        username: 'shakespeare',
         password: 'secret_password',
       });
 
       // Action & Assert
-      const password = await userRepositoryPostgres.getPasswordByUsername('dicoding');
+      const password = await userRepositoryPostgres.getPasswordByUsername('shakespeare');
       expect(password).toBe('secret_password');
     });
   });
@@ -112,11 +112,11 @@ describe('UserRepositoryPostgres', () => {
 
     it('should return user id correctly', async () => {
       // Arrange
-      await UsersTableTestHelper.addUser({ id: 'user-321', username: 'dicoding' });
+      await UsersTableTestHelper.addUser({ id: 'user-321', username: 'gautama' });
       const userRepositoryPostgres = new UserRepositoryPostgres(pool, {});
 
       // Action
-      const userId = await userRepositoryPostgres.getIdByUsername('dicoding');
+      const userId = await userRepositoryPostgres.getIdByUsername('gautama');
 
       // Assert
       expect(userId).toEqual('user-321');

@@ -16,7 +16,7 @@ describe('/users endpoint', () => {
     it('should response 201 and persisted user', async () => {
       // Arrange
       const requestPayload = {
-        username: 'dicoding',
+        username: 'imambonjol',
         password: 'secret',
         fullname: 'Dicoding Indonesia',
       };
@@ -62,7 +62,7 @@ describe('/users endpoint', () => {
     it('should response 400 when request payload not meet data type specification', async () => {
       // Arrange
       const requestPayload = {
-        username: 'dicoding',
+        username: 'ahnasution',
         password: 'secret',
         fullname: ['Dicoding Indonesia'],
       };
@@ -130,9 +130,9 @@ describe('/users endpoint', () => {
 
     it('should response 400 when username unavailable', async () => {
       // Arrange
-      await UsersTableTestHelper.addUser({ username: 'dicoding' });
+      await UsersTableTestHelper.addUser({ username: 'hasanuddin' });
       const requestPayload = {
-        username: 'dicoding',
+        username: 'hasanuddin',
         fullname: 'Dicoding Indonesia',
         password: 'super_secret',
       };

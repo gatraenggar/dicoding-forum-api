@@ -9,7 +9,7 @@ describe('GetAuthenticationUseCase', () => {
   it('should orchestrating the get authentication action correctly', async () => {
     // Arrange
     const useCasePayload = {
-      username: 'dicoding',
+      username: 'bungtomo',
       password: 'secret',
     };
     const expectedAuthentication = new NewAuth({
@@ -49,15 +49,15 @@ describe('GetAuthenticationUseCase', () => {
     // Assert
     expect(actualAuthentication).toEqual(expectedAuthentication);
     expect(mockUserRepository.getPasswordByUsername)
-      .toBeCalledWith('dicoding');
+      .toBeCalledWith('bungtomo');
     expect(mockPasswordHash.comparePassword)
       .toBeCalledWith('secret', 'encrypted_password');
     expect(mockUserRepository.getIdByUsername)
-      .toBeCalledWith('dicoding');
+      .toBeCalledWith('bungtomo');
     expect(mockAuthenticationTokenManager.createAccessToken)
-      .toBeCalledWith({ username: 'dicoding', id: 'user-123' });
+      .toBeCalledWith({ username: 'bungtomo', id: 'user-123' });
     expect(mockAuthenticationTokenManager.createRefreshToken)
-      .toBeCalledWith({ username: 'dicoding', id: 'user-123' });
+      .toBeCalledWith({ username: 'bungtomo', id: 'user-123' });
     expect(mockAuthenticationRepository.addToken)
       .toBeCalledWith(expectedAuthentication.refreshToken);
   });
