@@ -37,6 +37,9 @@ DomainErrorTranslator._directories = {
 
   'ADD_COMMENT_USE_CASE.NOT_CONTAIN_ACCESS_TOKEN': new InvariantError('harus mengirimkan token access'),
   'ADD_COMMENT_USE_CASE.AUTH_NOT_MEET_DATA_TYPE_SPECIFICATION': new InvariantError('tidak dapat membuat comment baru karena tipe data token tidak sesuai'),
+
+  'DELETE_COMMENT_USE_CASE.NOT_CONTAIN_ACCESS_TOKEN': new InvariantError('harus mengirimkan token access'),
+  'DELETE_COMMENT_USE_CASE.AUTH_NOT_MEET_DATA_TYPE_SPECIFICATION': new InvariantError('tidak dapat membuat comment baru karena tipe data token tidak sesuai'),
 };
 
 module.exports = DomainErrorTranslator;

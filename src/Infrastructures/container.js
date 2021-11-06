@@ -21,6 +21,7 @@ const BcryptPasswordHash = require('./security/BcryptPasswordHash');
 // use case
 const AddThreadUseCase = require('../Applications/use_case/AddThreadUseCase');
 const AddCommentUseCase = require('../Applications/use_case/AddCommentUseCase');
+const DeleteCommentUseCase = require('../Applications/use_case/DeleteCommentUseCase');
 const AddUserUseCase = require('../Applications/use_case/AddUserUseCase');
 const AuthenticationTokenManager = require('../Applications/security/AuthenticationTokenManager');
 const JwtTokenManager = require('./security/JwtTokenManager');
@@ -161,6 +162,23 @@ container.register([
         {
           name: 'threadRepository',
           internal: ThreadRepository.name,
+        },
+        {
+          name: 'authenticationTokenManager',
+          internal: AuthenticationTokenManager.name,
+        },
+      ],
+    },
+  },
+  {
+    key: DeleteCommentUseCase.name,
+    Class: DeleteCommentUseCase,
+    parameter: {
+      injectType: 'destructuring',
+      dependencies: [
+        {
+          name: 'commentRepository',
+          internal: CommentRepository.name,
         },
         {
           name: 'authenticationTokenManager',

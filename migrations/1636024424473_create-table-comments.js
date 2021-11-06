@@ -25,7 +25,7 @@ exports.up = (pgm) => {
       notNull: true,
       default: pgm.func('current_timestamp'),
     },
-    is_delete: {
+    is_deleted: {
       type: 'BOOLEAN',
       notNull: true,
       default: false,
