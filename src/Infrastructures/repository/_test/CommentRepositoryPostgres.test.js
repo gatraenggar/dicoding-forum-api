@@ -1,6 +1,7 @@
 /* eslint-disable no-undef */
 const PreComment = require('../../../Domains/comments/entities/PreComment');
 const PostComment = require('../../../Domains/comments/entities/PostComment');
+const ThreadComment = require('../../../Domains/comments/entities/ThreadComment');
 const CommentRepositoryPostgres = require('../CommentRepositoryPostgres');
 const CommentsTableTestHelper = require('../../../../tests/CommentsTableTestHelper');
 const UsersTableTestHelper = require('../../../../tests/UsersTableTestHelper');
@@ -114,12 +115,75 @@ describe('ThreadRepositoryPostgres', () => {
     });
   });
 
+  describe('getCommentsByThreadId', () => {
+    it('should get comments by threadId from database', async () => {
+      const owner = {
+        id: 'user-678918921',
+        username: 'alleniverson',
+      };
+      await UsersTableTestHelper.addUser(owner);
+
+      const commentator1 = {
+        id: 'user-189024790',
+        username: 'pippen',
+      };
+      await UsersTableTestHelper.addUser(commentator1);
+
+      const commentator2 = {
+        id: 'user-98292947',
+        username: 'rodman',
+      };
+      await UsersTableTestHelper.addUser(commentator2);
+
+      const threadId = 'thread-2734';
+      await ThreadsTableTestHelper.addThread({
+        id: threadId, owner: owner.id, title: 'The title', body: 'The body',
+      });
+
+      const comment1 = {
+        id: 'comment-98412',
+        thread: threadId,
+        owner: commentator1.id,
+        content: 'comment 1',
+        createdAt: '2021-11-12T07:22:33.555Z',
+      };
+      await CommentsTableTestHelper.addComment(comment1);
+
+      const comment2 = {
+        id: 'comment-7472',
+        thread: threadId,
+        owner: commentator2.id,
+        content: 'comment 22',
+        createdAt: '2021-08-08T08:45:33.555Z',
+      };
+      await CommentsTableTestHelper.addComment(comment2);
+
+      const commentRepositoryPostgres = new CommentRepositoryPostgres(pool, {});
+      const threadComments = await commentRepositoryPostgres.getCommentsByThreadId(threadId);
+
+      expect(threadComments).toStrictEqual([
+        new ThreadComment({
+          id: comment2.id,
+          username: commentator2.username,
+          date: comment2.createdAt,
+          content: comment2.content,
+        }),
+        new ThreadComment({
+          id: comment1.id,
+          username: commentator1.username,
+          date: comment1.createdAt,
+          content: comment1.content,
+        }),
+      ]);
+    });
+  });
+
   describe('deleteComment', () => {
     it('should delete comment from database', async () => {
       const ownerId = 'user-551';
       await UsersTableTestHelper.addUser({ id: ownerId, username: 'bernerslee' });
 
-      const threadId = 'thread-2734';
+      const threadId = 'thread-09259203523958';
       await ThreadsTableTestHelper.addThread({
         id: threadId, owner: ownerId, title: 'The Webs', body: 'The webs body',
       });

@@ -1,5 +1,6 @@
 /* eslint-disable no-underscore-dangle */
 const PostComment = require('../../Domains/comments/entities/PostComment');
+const ThreadComment = require('../../Domains/comments/entities/ThreadComment');
 const CommentRepository = require('../../Domains/comments/CommentRepository');
 const NotFoundError = require('../../Commons/exceptions/NotFoundError');
 const AuthorizationError = require('../../Commons/exceptions/AuthorizationError');
@@ -40,6 +41,35 @@ class CommentRepositoryPostgres extends CommentRepository {
     if (result.rows[0].owner !== ownerId) {
       throw new AuthorizationError('pengguna tidak terautorisasi');
     }
+  }
+
+  async getCommentsByThreadId(threadId) {
+    const query = {
+      text: `SELECT comments.id, username, content, created_at, is_deleted
+             FROM comments
+             LEFT JOIN users
+             ON comments.owner = users.id
+             WHERE thread = $1
+             ORDER BY created_at ASC`,
+      values: [threadId],
+    };
+
+    const result = await this._pool.query(query);
+
+    const comments = result.rows.map(({
+      id,
+      username,
+      content,
+      created_at: createdAt,
+      is_deleted: isDeleted,
+    }) => new ThreadComment({
+      id,
+      username,
+      date: new Date(new Date(createdAt).setHours(createdAt.getHours() + 8)).toISOString(),
+      content: isDeleted ? '**komentar telah dihapus**' : content,
+    }));
+
+    return comments;
   }
 
   async deleteComment({ commentId, threadId }) {

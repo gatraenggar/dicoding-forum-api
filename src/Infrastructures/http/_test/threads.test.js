@@ -181,4 +181,90 @@ describe('/threads endpoint', () => {
       expect(responseJson.message).toEqual('tidak dapat membuat thread baru karena karakter title melebihi batas limit');
     });
   });
+
+  describe('when GET /threads/{threadId}', () => {
+    it('should response 200 and return thread detail with its comments', async () => {
+      const server = await createServer(container);
+      await server.inject({
+        method: 'POST',
+        url: '/users',
+        payload: {
+          username: 'wrsupratman',
+          password: 'secret',
+          fullname: 'Dicoding Indonesia',
+        },
+      });
+
+      const ownerLoginResponse = await server.inject({
+        method: 'POST',
+        url: '/authentications',
+        payload: {
+          username: 'wrsupratman',
+          password: 'secret',
+        },
+      });
+      const { data: { accessToken: ownerAccessToken } } = JSON.parse(ownerLoginResponse.payload);
+
+      const addedThreadResponse = await server.inject({
+        method: 'POST',
+        url: '/threads',
+        payload: {
+          title: 'title test',
+          body: 'body test',
+        },
+        headers: {
+          Authorization: `Bearer ${ownerAccessToken}`,
+        },
+      });
+      const { data: { addedThread } } = JSON.parse(addedThreadResponse.payload);
+
+      await server.inject({
+        method: 'POST',
+        url: `/threads/${addedThread.id}/comments`,
+        payload: { content: 'tes tes konten tes' },
+        headers: {
+          Authorization: `Bearer ${ownerAccessToken}`,
+        },
+      });
+
+      await server.inject({
+        method: 'POST',
+        url: '/users',
+        payload: {
+          username: '17agustus',
+          password: 'secret',
+          fullname: 'Dicoding Indonesia',
+        },
+      });
+
+      const otherLoginResponse = await server.inject({
+        method: 'POST',
+        url: '/authentications',
+        payload: {
+          username: '17agustus',
+          password: 'secret',
+        },
+      });
+      const { data: { otherAccessToken } } = JSON.parse(otherLoginResponse.payload);
+
+      await server.inject({
+        method: 'POST',
+        url: `/threads/${addedThread.id}/comments`,
+        payload: { content: 'tes tes konten tes' },
+        headers: {
+          Authorization: `Bearer ${otherAccessToken}`,
+        },
+      });
+
+      const threadsDetailResponse = await server.inject({
+        method: 'GET',
+        url: `/threads/${addedThread.id}`,
+      });
+
+      const responseJson = JSON.parse(threadsDetailResponse.payload);
+      expect(threadsDetailResponse.statusCode).toEqual(200);
+      expect(responseJson.status).toEqual('success');
+      expect(responseJson.data.thread).toBeDefined();
+    });
+  });
 });
