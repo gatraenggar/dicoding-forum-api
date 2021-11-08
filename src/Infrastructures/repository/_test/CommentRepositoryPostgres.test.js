@@ -8,6 +8,7 @@ const UsersTableTestHelper = require('../../../../tests/UsersTableTestHelper');
 const ThreadsTableTestHelper = require('../../../../tests/ThreadsTableTestHelper');
 const pool = require('../../database/postgres/pool');
 const AuthorizationError = require('../../../Commons/exceptions/AuthorizationError');
+const NotFoundError = require('../../../Commons/exceptions/NotFoundError');
 
 describe('ThreadRepositoryPostgres', () => {
   afterEach(async () => {
@@ -155,6 +156,7 @@ describe('ThreadRepositoryPostgres', () => {
         owner: commentator2.id,
         content: 'comment 22',
         createdAt: '2021-08-08T08:45:33.555Z',
+        is_deleted: true,
       };
       await CommentsTableTestHelper.addComment(comment2);
 
@@ -166,7 +168,7 @@ describe('ThreadRepositoryPostgres', () => {
           id: comment2.id,
           username: commentator2.username,
           date: comment2.createdAt,
-          content: comment2.content,
+          content: '**komentar telah dihapus**',
         }),
         new ThreadComment({
           id: comment1.id,
@@ -198,6 +200,17 @@ describe('ThreadRepositoryPostgres', () => {
 
       const comments = await CommentsTableTestHelper.findCommentById(commentId);
       expect(comments[0].is_deleted).toStrictEqual(true);
+    });
+
+    it('should throw NotFoundError when the comment is not found', async () => {
+      const commentRepositoryPostgres = new CommentRepositoryPostgres(pool, {});
+
+      return expect(commentRepositoryPostgres.deleteComment({
+        commentId: 'lol',
+        threadId: 'lol',
+      }))
+        .rejects
+        .toThrowError(NotFoundError);
     });
   });
 });
