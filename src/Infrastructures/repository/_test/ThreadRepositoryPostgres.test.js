@@ -25,13 +25,13 @@ describe('ThreadRepositoryPostgres', () => {
     });
 
     it('should not throw NotFoundError when thread available', async () => {
-      await UsersTableTestHelper.addUser({ id: 'user-70910', username: 'tolle' });
+      await UsersTableTestHelper.addUser({ id: 'user-80234905', username: 'tolle' });
       await ThreadsTableTestHelper.addThread({
-        id: 'thread-8908940', owner: 'user-70910', title: 'Thread', body: 'Thread body test',
+        id: 'thread-7767623', owner: 'user-80234905', title: 'Thread', body: 'Thread body test',
       });
       const threadRepositoryPostgres = new ThreadRepositoryPostgres(pool, {});
 
-      await expect(threadRepositoryPostgres.verifyAvailableThread('thread-8908940')).resolves.not.toThrowError(NotFoundError);
+      await expect(threadRepositoryPostgres.verifyAvailableThread('thread-7767623')).resolves.not.toThrowError(NotFoundError);
     });
   });
 

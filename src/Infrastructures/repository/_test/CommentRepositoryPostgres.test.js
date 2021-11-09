@@ -10,7 +10,7 @@ const pool = require('../../database/postgres/pool');
 const AuthorizationError = require('../../../Commons/exceptions/AuthorizationError');
 const NotFoundError = require('../../../Commons/exceptions/NotFoundError');
 
-describe('ThreadRepositoryPostgres', () => {
+describe('CommentRepositoryPostgres', () => {
   afterEach(async () => {
     await CommentsTableTestHelper.cleanTable();
   });
@@ -113,6 +113,41 @@ describe('ThreadRepositoryPostgres', () => {
 
       await expect(commentRepositoryPostgres.verifyOwner({ commentId, ownerId }))
         .resolves.not.toThrowError(AuthorizationError);
+    });
+  });
+
+  describe('verifyAvailableComment function', () => {
+    it('should throw NotFoundError when comment not available', async () => {
+      const commentRepositoryPostgres = new CommentRepositoryPostgres(pool, {});
+
+      await expect(commentRepositoryPostgres.verifyAvailableComment('comment-87417294719740-39575')).rejects.toThrowError(NotFoundError);
+    });
+
+    it('should not throw NotFoundError when comment available', async () => {
+      const userId = 'user-8931554';
+      const threadId = 'thread-8908940';
+      const commentId = 'comment-014901';
+
+      await UsersTableTestHelper.addUser({
+        id: userId,
+        username: 'herun',
+      });
+      await ThreadsTableTestHelper.addThread({
+        id: threadId,
+        owner: userId,
+        title: 'Thread',
+        body: 'Thread body test',
+      });
+      await CommentsTableTestHelper.addComment({
+        id: commentId,
+        owner: userId,
+        thread: threadId,
+      });
+
+      const commentRepositoryPostgres = new CommentRepositoryPostgres(pool, {});
+      await expect(commentRepositoryPostgres.verifyAvailableComment(threadId, commentId))
+        .resolves.not
+        .toThrowError(NotFoundError);
     });
   });
 
