@@ -8,6 +8,8 @@ const RepliesTableTestHelper = require('../../../../tests/RepliesTableTestHelper
 const UsersTableTestHelper = require('../../../../tests/UsersTableTestHelper');
 const ThreadsTableTestHelper = require('../../../../tests/ThreadsTableTestHelper');
 const pool = require('../../database/postgres/pool');
+const AuthorizationError = require('../../../Commons/exceptions/AuthorizationError');
+const NotFoundError = require('../../../Commons/exceptions/NotFoundError');
 
 describe('ThreadRepositoryPostgres', () => {
   afterEach(async () => {
@@ -73,6 +75,59 @@ describe('ThreadRepositoryPostgres', () => {
         owner: userId,
         content: preReply.content,
       }));
+    });
+  });
+
+  describe('verifyOwner', () => {
+    it('should throw AuthorizationError when user is not the reply\'s owner', async () => {
+      const notOwnerId = 'user-110';
+      const ownerId = 'user-8921';
+      await UsersTableTestHelper.addUser({ id: ownerId, username: 'mandela' });
+
+      const threadId = 'thread-945';
+      await ThreadsTableTestHelper.addThread({
+        id: threadId, owner: ownerId, title: 'Freedom', body: 'Freedom body',
+      });
+
+      const commentId = 'comment-90991';
+      await CommentsTableTestHelper.addComment({
+        id: commentId, thread: threadId, owner: ownerId, content: 'Freedom content',
+      });
+
+      const replyId = 'reply-90991';
+      await RepliesTableTestHelper.addReply({
+        id: replyId, comment: commentId, owner: ownerId, content: 'Freedom reply',
+      });
+
+      const replyRepositoryPostgres = new ReplyRepositoryPostgres(pool, {});
+
+      await expect(replyRepositoryPostgres.verifyOwner(replyId, notOwnerId))
+        .rejects.toThrowError(AuthorizationError);
+    });
+
+    it('should not throw AuthorizationError when user is the comment\'s owner', async () => {
+      const ownerId = 'user-8921';
+      await UsersTableTestHelper.addUser({ id: ownerId, username: 'mandela' });
+
+      const threadId = 'thread-945';
+      await ThreadsTableTestHelper.addThread({
+        id: threadId, owner: ownerId, title: 'Freedom', body: 'Freedom body',
+      });
+
+      const commentId = 'comment-90991';
+      await CommentsTableTestHelper.addComment({
+        id: commentId, thread: threadId, owner: ownerId, content: 'Freedom content',
+      });
+
+      const replyId = 'reply-90991';
+      await RepliesTableTestHelper.addReply({
+        id: replyId, comment: commentId, owner: ownerId, content: 'Freedom reply',
+      });
+
+      const replyRepositoryPostgres = new ReplyRepositoryPostgres(pool, {});
+
+      await expect(replyRepositoryPostgres.verifyOwner(replyId, ownerId))
+        .resolves.not.toThrowError(AuthorizationError);
     });
   });
 
@@ -151,6 +206,42 @@ describe('ThreadRepositoryPostgres', () => {
           ],
         },
       ]);
+    });
+  });
+
+  describe('deleteReply', () => {
+    it('should delete reply from database', async () => {
+      const ownerId = 'user-551';
+      await UsersTableTestHelper.addUser({ id: ownerId, username: 'bernerslee' });
+
+      const threadId = 'thread-09259203523958';
+      await ThreadsTableTestHelper.addThread({
+        id: threadId, owner: ownerId, title: 'The Webs', body: 'The webs body',
+      });
+
+      const commentId = 'comment-0148';
+      await CommentsTableTestHelper.addComment({
+        id: commentId, thread: threadId, owner: ownerId, content: 'The webs comment',
+      });
+
+      const replyId = 'reply-0148';
+      await RepliesTableTestHelper.addReply({
+        id: replyId, comment: commentId, owner: ownerId, content: 'The webs reply',
+      });
+
+      const replyRepositoryPostgres = new ReplyRepositoryPostgres(pool, {});
+      await replyRepositoryPostgres.deleteReply(replyId);
+
+      const replies = await RepliesTableTestHelper.findReplyById(replyId);
+      expect(replies[0].is_deleted).toStrictEqual(true);
+    });
+
+    it('should throw NotFoundError when the reply is not found', async () => {
+      const replyRepositoryPostgres = new ReplyRepositoryPostgres(pool, {});
+
+      return expect(replyRepositoryPostgres.deleteReply('lol'))
+        .rejects
+        .toThrowError(NotFoundError);
     });
   });
 });
