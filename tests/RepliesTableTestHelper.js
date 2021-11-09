@@ -12,7 +12,7 @@ const RepliesTableTestHelper = {
     is_deleted = false,
   }) {
     const query = {
-      text: 'INSERT INTO comments VALUES($1, $2, $3, $4, $5, $6)',
+      text: 'INSERT INTO replies VALUES($1, $2, $3, $4, $5, $6)',
       values: [id, owner, comment, content, createdAt, is_deleted],
     };
 

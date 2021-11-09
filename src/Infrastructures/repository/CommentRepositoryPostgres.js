@@ -80,6 +80,7 @@ class CommentRepositoryPostgres extends CommentRepository {
       username,
       date: new Date(new Date(createdAt).setHours(createdAt.getHours() + 8)).toISOString(),
       content: isDeleted ? '**komentar telah dihapus**' : content,
+      replies: [],
     }));
 
     return comments;

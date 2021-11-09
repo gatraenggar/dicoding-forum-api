@@ -204,12 +204,14 @@ describe('CommentRepositoryPostgres', () => {
           username: commentator2.username,
           date: comment2.createdAt,
           content: '**komentar telah dihapus**',
+          replies: [],
         }),
         new ThreadComment({
           id: comment1.id,
           username: commentator1.username,
           date: comment1.createdAt,
           content: comment1.content,
+          replies: [],
         }),
       ]);
     });

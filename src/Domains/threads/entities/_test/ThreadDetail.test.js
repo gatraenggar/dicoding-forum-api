@@ -17,6 +17,7 @@ describe('a thread detail entity', () => {
           username: 'thecommentator',
           date: '2021-08-08T08:55:09.775Z',
           content: 'cek ig kita kakaa',
+          replies: [],
         }),
       ],
     };
@@ -32,6 +33,7 @@ describe('a thread detail entity', () => {
           username: 'thecommentator',
           date: '2021-08-08T08:55:09.775Z',
           content: 'cek ig kita kakaa',
+          replies: [],
         }),
       ],
     };
@@ -47,6 +49,7 @@ describe('a thread detail entity', () => {
           username: 'thecommentator',
           date: '2021-08-08T08:55:09.775Z',
           content: 'cek ig kita kakaa',
+          replies: [],
         }),
       ],
     };
@@ -232,6 +235,7 @@ describe('a thread detail entity', () => {
           username: 'thecommentator',
           date: '2021-08-08T08:55:09.775Z',
           content: 'cek ig kita kakaa',
+          replies: [],
         }),
       ],
     };
@@ -251,6 +255,5 @@ describe('a thread detail entity', () => {
     expect(date).toEqual(payload.date);
     expect(username).toEqual(payload.username);
     expect(comments).toEqual(payload.comments);
-    expect(comments[0]).toEqual(payload.comments[0]);
   });
 });

@@ -1,11 +1,14 @@
+const CommentReply = require('../../replies/entities/CommentReply');
+
 class ThreadComment {
   constructor({
     id,
     username,
     date,
     content,
+    replies,
   }) {
-    if (!id || !username || !date || !content) {
+    if (!id || !username || !date || !content || !replies) {
       throw new Error('THREADCOMMENT.NOT_CONTAIN_NEEDED_PROPERTY');
     }
 
@@ -14,14 +17,24 @@ class ThreadComment {
       || typeof username !== 'string'
       || typeof date !== 'string'
       || typeof content !== 'string'
+      || !Array.isArray(replies)
     ) {
       throw new Error('THREADCOMMENT.NOT_MEET_DATA_TYPE_SPECIFICATION');
+    }
+
+    if (replies.length > 0) {
+      replies.forEach((reply) => {
+        if (!(reply instanceof CommentReply)) {
+          throw new Error('THREADCOMMENT.NOT_MEET_DATA_TYPE_SPECIFICATION');
+        }
+      });
     }
 
     this.id = id;
     this.username = username;
     this.date = date;
     this.content = content;
+    this.replies = replies;
   }
 }
 
