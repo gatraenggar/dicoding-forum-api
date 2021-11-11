@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 const PostComment = require('../PostComment');
 
 describe('a comment entity', () => {

@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 const DeleteCommentUseCase = require('../DeleteCommentUseCase');
 const CommentRepository = require('../../../Domains/comments/CommentRepository');
 const AuthenticationTokenManager = require('../../security/AuthenticationTokenManager');

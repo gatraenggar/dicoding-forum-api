@@ -3,7 +3,6 @@ const ThreadRepository = require('../../../Domains/threads/ThreadRepository');
 const AddThreadUseCase = require('../AddThreadUseCase');
 const AuthenticationTokenManager = require('../../security/AuthenticationTokenManager');
 
-/* eslint-disable no-undef */
 describe('AddThreadUseCase', () => {
   it('should throw error if use case payload not contain access token', async () => {
     const useCasePayload = {

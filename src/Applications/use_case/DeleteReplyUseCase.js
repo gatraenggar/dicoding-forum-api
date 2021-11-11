@@ -1,7 +1,3 @@
-/* eslint-disable max-len */
-/* eslint-disable no-underscore-dangle */
-/* eslint-disable class-methods-use-this */
-
 class DeleteReplyUseCase {
   constructor({ replyRepository, commentRepository, authenticationTokenManager }) {
     this._replyRepository = replyRepository;

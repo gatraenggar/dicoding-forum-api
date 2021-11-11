@@ -1,6 +1,3 @@
-/* eslint-disable max-len */
-/* eslint-disable no-underscore-dangle */
-/* eslint-disable class-methods-use-this */
 const PreReply = require('../../Domains/replies/entities/PreReply');
 
 class AddReplyUseCase {

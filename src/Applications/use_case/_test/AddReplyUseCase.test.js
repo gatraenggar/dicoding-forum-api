@@ -1,5 +1,3 @@
-/* eslint-disable no-undef */
-/* eslint-disable no-multiple-empty-lines */
 const AddReplyUseCase = require('../AddReplyUseCase');
 const PreReply = require('../../../Domains/replies/entities/PreReply');
 const PostReply = require('../../../Domains/replies/entities/PostReply');

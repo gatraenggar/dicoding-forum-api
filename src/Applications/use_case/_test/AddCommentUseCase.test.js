@@ -1,5 +1,3 @@
-/* eslint-disable no-undef */
-/* eslint-disable no-multiple-empty-lines */
 const AddCommentUseCase = require('../AddCommentUseCase');
 const PreComment = require('../../../Domains/comments/entities/PreComment');
 const PostComment = require('../../../Domains/comments/entities/PostComment');

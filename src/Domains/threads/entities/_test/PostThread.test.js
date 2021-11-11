@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 const PostThread = require('../PostThread');
 
 describe('a thread entity', () => {

@@ -1,4 +1,3 @@
-/* eslint-disable no-underscore-dangle */
 const PostComment = require('../../Domains/comments/entities/PostComment');
 const ThreadComment = require('../../Domains/comments/entities/ThreadComment');
 const CommentRepository = require('../../Domains/comments/CommentRepository');

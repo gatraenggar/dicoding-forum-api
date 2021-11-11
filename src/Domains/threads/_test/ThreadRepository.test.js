@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 const ThreadRepository = require('../ThreadRepository');
 
 describe('ThreadRepository interface', () => {

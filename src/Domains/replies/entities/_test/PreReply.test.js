@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 const PreReply = require('../PreReply');
 
 describe('a PreReply entity', () => {

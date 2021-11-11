@@ -1,4 +1,3 @@
-/* eslint-disable no-underscore-dangle */
 const AddThreadUseCase = require('../../../../Applications/use_case/AddThreadUseCase');
 const GetThreadDetailUseCase = require('../../../../Applications/use_case/GetThreadDetailUseCase');
 

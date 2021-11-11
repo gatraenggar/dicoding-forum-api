@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 const PostReply = require('../PostReply');
 
 describe('a PostReply entity', () => {

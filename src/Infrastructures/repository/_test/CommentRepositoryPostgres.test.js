@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 const PreComment = require('../../../Domains/comments/entities/PreComment');
 const PostComment = require('../../../Domains/comments/entities/PostComment');
 const ThreadComment = require('../../../Domains/comments/entities/ThreadComment');

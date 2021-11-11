@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 const ReplyRepository = require('../ReplyRepository');
 
 describe('ReplyRepository interface', () => {

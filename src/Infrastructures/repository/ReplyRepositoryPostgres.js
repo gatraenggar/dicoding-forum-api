@@ -1,4 +1,3 @@
-/* eslint-disable no-underscore-dangle */
 const PostReply = require('../../Domains/replies/entities/PostReply');
 const CommentReply = require('../../Domains/replies/entities/CommentReply');
 const ReplyRepository = require('../../Domains/replies/ReplyRepository');

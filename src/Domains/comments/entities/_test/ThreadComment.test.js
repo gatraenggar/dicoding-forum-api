@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 const ThreadComment = require('../ThreadComment');
 const CommentReply = require('../../../replies/entities/CommentReply');
 

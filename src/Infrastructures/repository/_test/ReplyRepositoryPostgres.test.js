@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 const PreReply = require('../../../Domains/replies/entities/PreReply');
 const PostReply = require('../../../Domains/replies/entities/PostReply');
 const CommentReply = require('../../../Domains/replies/entities/CommentReply');

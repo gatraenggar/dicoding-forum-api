@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 const PreThread = require('../../../Domains/threads/entities/PreThread');
 const PostThread = require('../../../Domains/threads/entities/PostThread');
 const NotFoundError = require('../../../Commons/exceptions/NotFoundError');

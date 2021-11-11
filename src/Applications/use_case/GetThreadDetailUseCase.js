@@ -1,5 +1,3 @@
-/* eslint-disable space-before-blocks */
-/* eslint-disable no-underscore-dangle */
 const ThreadDetail = require('../../Domains/threads/entities/ThreadDetail');
 
 class GetThreadDetailUseCase {

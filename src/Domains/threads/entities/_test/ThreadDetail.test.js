@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 const ThreadDetail = require('../ThreadDetail');
 const ThreadComment = require('../../../comments/entities/ThreadComment');
 

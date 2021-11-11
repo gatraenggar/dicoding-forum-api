@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 const DeleteReplyUseCase = require('../DeleteReplyUseCase');
 const CommentRepository = require('../../../Domains/comments/CommentRepository');
 const ReplyRepository = require('../../../Domains/replies/ReplyRepository');

@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 const pool = require('../../database/postgres/pool');
 const ThreadsTableTestHelper = require('../../../../tests/ThreadsTableTestHelper');
 const container = require('../../container');

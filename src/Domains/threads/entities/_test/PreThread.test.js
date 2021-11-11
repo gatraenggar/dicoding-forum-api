@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 const PreThread = require('../PreThread');
 
 describe('a thread entity', () => {

@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 const CommentReply = require('../CommentReply');
 
 describe('a comment entity', () => {

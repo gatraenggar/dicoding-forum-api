@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 const GetThreadDetailUseCase = require('../GetThreadDetailUseCase');
 
 const ThreadDetail = require('../../../Domains/threads/entities/ThreadDetail');

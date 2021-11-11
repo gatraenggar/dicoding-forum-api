@@ -1,4 +1,3 @@
-/* eslint-disable no-underscore-dangle */
 const PostThread = require('../../Domains/threads/entities/PostThread');
 const ThreadRepository = require('../../Domains/threads/ThreadRepository');
 const NotFoundError = require('../../Commons/exceptions/NotFoundError');

@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 const PreComment = require('../PreComment');
 
 describe('a comment entity', () => {
