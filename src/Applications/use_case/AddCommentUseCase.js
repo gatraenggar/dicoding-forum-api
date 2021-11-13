@@ -8,7 +8,6 @@ class AddCommentUseCase {
   }
 
   async execute(useCasePayload, useCaseAuth, useCaseParam) {
-    this._validateAuth(useCaseAuth.artifacts);
     const { id } = await this._authenticationTokenManager.decodePayload(useCaseAuth.artifacts.token);
 
     await this._threadRepository.verifyAvailableThread(useCaseParam.threadId);
@@ -20,17 +19,6 @@ class AddCommentUseCase {
     }));
 
     return comment;
-  }
-
-  _validateAuth(payload) {
-    const { token } = payload;
-    if (!token) {
-      throw new Error('ADD_COMMENT_USE_CASE.NOT_CONTAIN_ACCESS_TOKEN');
-    }
-
-    if (typeof token !== 'string') {
-      throw new Error('ADD_COMMENT_USE_CASE.AUTH_NOT_MEET_DATA_TYPE_SPECIFICATION');
-    }
   }
 }
 

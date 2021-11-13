@@ -4,42 +4,6 @@ const ReplyRepository = require('../../../Domains/replies/ReplyRepository');
 const AuthenticationTokenManager = require('../../security/AuthenticationTokenManager');
 
 describe('delete reply use case', () => {
-  it('should throw error if use case payload not contain access token', async () => {
-    const useCaseAuth = {
-      artifacts: {},
-    };
-    const useCaseParam = {
-      threadId: 'thread-123',
-      commentId: 'comment-123',
-      replyId: 'reply-123',
-    };
-
-    const deleteReplyUseCase = new DeleteReplyUseCase({});
-
-    await expect(deleteReplyUseCase.execute(useCaseAuth, useCaseParam))
-      .rejects
-      .toThrowError('DELETE_REPLY_USE_CASE.NOT_CONTAIN_ACCESS_TOKEN');
-  });
-
-  it('should throw error if access token not string', async () => {
-    const useCaseAuth = {
-      artifacts: {
-        token: 123,
-      },
-    };
-    const useCaseParam = {
-      threadId: 'thread-123',
-      commentId: 'comment-123',
-      replyId: 'reply-123',
-    };
-
-    const deleteReplyUseCase = new DeleteReplyUseCase({});
-
-    await expect(deleteReplyUseCase.execute(useCaseAuth, useCaseParam))
-      .rejects
-      .toThrowError('DELETE_REPLY_USE_CASE.AUTH_NOT_MEET_DATA_TYPE_SPECIFICATION');
-  });
-
   it('should orchestrating the delete reply action correctly', async () => {
     const useCaseAuth = {
       artifacts: {

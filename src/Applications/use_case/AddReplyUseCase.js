@@ -8,7 +8,6 @@ class AddReplyUseCase {
   }
 
   async execute(useCasePayload, useCaseAuth, useCaseParam) {
-    this._validateAuth(useCaseAuth.artifacts);
     const { id } = await this._authenticationTokenManager.decodePayload(useCaseAuth.artifacts.token);
 
     await this._commentRepository.verifyAvailableComment(useCaseParam.threadId, useCaseParam.commentId);
@@ -18,17 +17,6 @@ class AddReplyUseCase {
       comment: useCaseParam.commentId,
       content: useCasePayload.content,
     }));
-  }
-
-  _validateAuth(payload) {
-    const { token } = payload;
-    if (!token) {
-      throw new Error('ADD_REPLY_USE_CASE.NOT_CONTAIN_ACCESS_TOKEN');
-    }
-
-    if (typeof token !== 'string') {
-      throw new Error('ADD_REPLY_USE_CASE.AUTH_NOT_MEET_DATA_TYPE_SPECIFICATION');
-    }
   }
 }
 

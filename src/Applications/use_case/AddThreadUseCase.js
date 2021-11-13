@@ -7,7 +7,6 @@ class AddThreadUseCase {
   }
 
   async execute(useCasePayload, useCaseAuth) {
-    this._validateAuth(useCaseAuth.artifacts);
     const { id } = await this._authenticationTokenManager.decodePayload(useCaseAuth.artifacts.token);
 
     const thread = this._threadRepository.addThread(new PreThread({
@@ -17,17 +16,6 @@ class AddThreadUseCase {
     }));
 
     return thread;
-  }
-
-  _validateAuth(payload) {
-    const { token } = payload;
-    if (!token) {
-      throw new Error('ADD_THREAD_USE_CASE.NOT_CONTAIN_ACCESS_TOKEN');
-    }
-
-    if (typeof token !== 'string') {
-      throw new Error('ADD_THREAD_USE_CASE.AUTH_NOT_MEET_DATA_TYPE_SPECIFICATION');
-    }
   }
 }
 

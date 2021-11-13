@@ -4,38 +4,6 @@ const AddThreadUseCase = require('../AddThreadUseCase');
 const AuthenticationTokenManager = require('../../security/AuthenticationTokenManager');
 
 describe('AddThreadUseCase', () => {
-  it('should throw error if use case payload not contain access token', async () => {
-    const useCasePayload = {
-      title: 'Thread Title',
-      body: 'Body of use case',
-    };
-    const useCaseAuth = {
-      artifacts: { },
-    };
-    const addThreadUseCase = new AddThreadUseCase({});
-
-    await expect(addThreadUseCase.execute(useCasePayload, useCaseAuth))
-      .rejects
-      .toThrowError('ADD_THREAD_USE_CASE.NOT_CONTAIN_ACCESS_TOKEN');
-  });
-
-  it('should throw error if access token not string', async () => {
-    const useCasePayload = {
-      title: 'Thread Title',
-      body: 'Body of use case',
-    };
-    const useCaseAuth = {
-      artifacts: {
-        token: 123,
-      },
-    };
-    const addThreadUseCase = new AddThreadUseCase({});
-
-    await expect(addThreadUseCase.execute(useCasePayload, useCaseAuth))
-      .rejects
-      .toThrowError('ADD_THREAD_USE_CASE.AUTH_NOT_MEET_DATA_TYPE_SPECIFICATION');
-  });
-
   it('should orchestrating the add thread action correctly', async () => {
     const useCasePayload = {
       title: 'Thread Title',

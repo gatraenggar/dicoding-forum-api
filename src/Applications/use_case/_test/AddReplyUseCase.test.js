@@ -6,44 +6,6 @@ const ReplyRepository = require('../../../Domains/replies/ReplyRepository');
 const CommentRepository = require('../../../Domains/comments/CommentRepository');
 
 describe('add reply use case', () => {
-  it('should throw error if use case payload not contain access token', async () => {
-    const useCasePayload = {
-      content: 'Try and error',
-    };
-    const useCaseAuth = {
-      artifacts: {},
-    };
-    const useCaseParam = {
-      commentId: 'comment-123',
-    };
-
-    const addReplyUseCase = new AddReplyUseCase({});
-
-    await expect(addReplyUseCase.execute(useCasePayload, useCaseAuth, useCaseParam))
-      .rejects
-      .toThrowError('ADD_REPLY_USE_CASE.NOT_CONTAIN_ACCESS_TOKEN');
-  });
-
-  it('should throw error if access token not string', async () => {
-    const useCasePayload = {
-      content: 'Try and error',
-    };
-    const useCaseAuth = {
-      artifacts: {
-        token: 123,
-      },
-    };
-    const useCaseParam = {
-      commentId: 'comment-123',
-    };
-
-    const addReplyUseCase = new AddReplyUseCase({});
-
-    await expect(addReplyUseCase.execute(useCasePayload, useCaseAuth, useCaseParam))
-      .rejects
-      .toThrowError('ADD_REPLY_USE_CASE.AUTH_NOT_MEET_DATA_TYPE_SPECIFICATION');
-  });
-
   it('should orchestrating the add reply action correctly', async () => {
     const useCasePayload = {
       content: 'Try and error',

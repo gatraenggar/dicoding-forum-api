@@ -27,21 +27,13 @@ DomainErrorTranslator._directories = {
   'THREADDETAIL.NOT_CONTAIN_NEEDED_PROPERTY': new InvariantError('harus mengirimkan id, title, body, date, username dan comments'),
   'THREADDETAIL.NOT_MEET_DATA_TYPE_SPECIFICATION': new InvariantError('id, title, body, date, dan username harus string, lalu comments harus array of ThreadComment'),
 
-  'ADD_THREAD_USE_CASE.NOT_CONTAIN_ACCESS_TOKEN': new InvariantError('harus mengirimkan token access'),
-  'ADD_THREAD_USE_CASE.AUTH_NOT_MEET_DATA_TYPE_SPECIFICATION': new InvariantError('tidak dapat membuat thread baru karena tipe data token tidak sesuai'),
-
   'PRECOMMENT.NOT_CONTAIN_NEEDED_PROPERTY': new InvariantError('tidak dapat membuat comment baru karena properti yang dibutuhkan tidak ada'),
   'PRECOMMENT.NOT_MEET_DATA_TYPE_SPECIFICATION': new InvariantError('tidak dapat membuat comment baru karena tipe data tidak sesuai'),
   'POSTCOMMENT.NOT_CONTAIN_NEEDED_PROPERTY': new InvariantError('harus mengirimkan id, owner, dan content'),
   'POSTCOMMENT.NOT_MEET_DATA_TYPE_SPECIFICATION': new InvariantError('id, owner, dan content harus string'),
   'THREADCOMMENT.NOT_CONTAIN_NEEDED_PROPERTY': new InvariantError('harus mengirimkan id, username, date, dan content'),
   'THREADCOMMENT.NOT_MEET_DATA_TYPE_SPECIFICATION': new InvariantError('id, username, date, dan content harus string'),
-
-  'ADD_COMMENT_USE_CASE.NOT_CONTAIN_ACCESS_TOKEN': new InvariantError('harus mengirimkan token access'),
-  'ADD_COMMENT_USE_CASE.AUTH_NOT_MEET_DATA_TYPE_SPECIFICATION': new InvariantError('tidak dapat membuat comment baru karena tipe data token tidak sesuai'),
   'GET_THREAD_DETAIL_USE_CASE.NOT_CONTAIN_THREAD_ID': new InvariantError('harus mengirimkan parameter threadId'),
-  'DELETE_COMMENT_USE_CASE.NOT_CONTAIN_ACCESS_TOKEN': new InvariantError('harus mengirimkan token access'),
-  'DELETE_COMMENT_USE_CASE.AUTH_NOT_MEET_DATA_TYPE_SPECIFICATION': new InvariantError('tidak dapat membuat comment baru karena tipe data token tidak sesuai'),
 
   'PREREPLY.NOT_CONTAIN_NEEDED_PROPERTY': new InvariantError('tidak dapat membuat reply baru karena properti yang dibutuhkan tidak ada'),
   'PREREPLY.NOT_MEET_DATA_TYPE_SPECIFICATION': new InvariantError('tidak dapat membuat reply baru karena tipe data tidak sesuai'),
@@ -49,11 +41,6 @@ DomainErrorTranslator._directories = {
   'POSTREPLY.NOT_MEET_DATA_TYPE_SPECIFICATION': new InvariantError('tidak dapat membuat reply baru karena tipe data tidak sesuai'),
   'COMMENTREPLY.NOT_CONTAIN_NEEDED_PROPERTY': new InvariantError('harus mengirimkan id, username, date, dan content'),
   'COMMENTREPLY.NOT_MEET_DATA_TYPE_SPECIFICATION': new InvariantError('id, username, date, dan content harus string'),
-
-  'ADD_REPLY_USE_CASE.NOT_CONTAIN_ACCESS_TOKEN': new InvariantError('harus mengirimkan token access'),
-  'ADD_REPLY_USE_CASE.AUTH_NOT_MEET_DATA_TYPE_SPECIFICATION': new InvariantError('tidak dapat membuat reply baru karena tipe data token tidak sesuai'),
-  'DELETE_REPLY_USE_CASE.NOT_CONTAIN_ACCESS_TOKEN': new InvariantError('harus mengirimkan token access'),
-  'DELETE_REPLY_USE_CASE.AUTH_NOT_MEET_DATA_TYPE_SPECIFICATION': new InvariantError('tidak dapat membuat reply baru karena tipe data token tidak sesuai'),
 };
 
 module.exports = DomainErrorTranslator;

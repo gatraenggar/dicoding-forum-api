@@ -3,40 +3,6 @@ const CommentRepository = require('../../../Domains/comments/CommentRepository')
 const AuthenticationTokenManager = require('../../security/AuthenticationTokenManager');
 
 describe('delete comment use case', () => {
-  it('should throw error if use case payload not contain access token', async () => {
-    const useCaseAuth = {
-      artifacts: {},
-    };
-    const useCaseParam = {
-      threadId: 'thread-123',
-      commentId: 'comment-123',
-    };
-
-    const deleteCommentUseCase = new DeleteCommentUseCase({});
-
-    await expect(deleteCommentUseCase.execute(useCaseAuth, useCaseParam))
-      .rejects
-      .toThrowError('DELETE_COMMENT_USE_CASE.NOT_CONTAIN_ACCESS_TOKEN');
-  });
-
-  it('should throw error if access token not string', async () => {
-    const useCaseAuth = {
-      artifacts: {
-        token: 123,
-      },
-    };
-    const useCaseParam = {
-      threadId: 'thread-123',
-      commentId: 'comment-123',
-    };
-
-    const deleteCommentUseCase = new DeleteCommentUseCase({});
-
-    await expect(deleteCommentUseCase.execute(useCaseAuth, useCaseParam))
-      .rejects
-      .toThrowError('DELETE_COMMENT_USE_CASE.AUTH_NOT_MEET_DATA_TYPE_SPECIFICATION');
-  });
-
   it('should orchestrating the delete comment action correctly', async () => {
     const useCaseAuth = {
       artifacts: {
