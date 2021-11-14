@@ -53,20 +53,20 @@ describe('get thread detail use case', () => {
       },
     ];
     const mockThreadComments = [
-      new ThreadComment({
+      {
         id: 'comment-_pby2_tmXV6bcvcdev8xk',
         username: 'johndoe',
-        date: '2021-08-08T07:22:33.555Z',
+        created_at: '2021-08-08T07:22:33.555Z',
         content: 'sebuah comment',
-        replies: mockCommentReplies[0]['comment-_pby2_tmXV6bcvcdev8xk'],
-      }),
-      new ThreadComment({
+        is_deleted: false,
+      },
+      {
         id: 'comment-yksuCoxM2s4MMrZJO-qVD',
         username: 'dicoding',
-        date: '2021-08-08T07:26:21.338Z',
+        created_at: '2021-08-08T07:26:21.338Z',
         content: '**komentar telah dihapus**',
-        replies: mockCommentReplies[0]['comment-yksuCoxM2s4MMrZJO-qVD'],
-      }),
+        is_deleted: true,
+      },
     ];
     const expectedThreadDetail = new ThreadDetail({
       id: 'thread-h_2FkLZhtgBKY2kh4CC02',
@@ -74,7 +74,22 @@ describe('get thread detail use case', () => {
       body: 'sebuah body thread',
       date: '2021-08-08T07:19:09.775Z',
       username: 'dicoding',
-      comments: mockThreadComments,
+      comments: [
+        new ThreadComment({
+          id: mockThreadComments[0].id,
+          username: mockThreadComments[0].username,
+          date: mockThreadComments[0].created_at,
+          content: mockThreadComments[0].content,
+          replies: mockCommentReplies[0][mockThreadComments[0].id],
+        }),
+        new ThreadComment({
+          id: mockThreadComments[1].id,
+          username: mockThreadComments[1].username,
+          date: mockThreadComments[1].created_at,
+          content: mockThreadComments[1].content,
+          replies: mockCommentReplies[0][mockThreadComments[1].id],
+        }),
+      ],
     });
 
     const mockThreadRepository = new ThreadRepository();
@@ -104,7 +119,7 @@ describe('get thread detail use case', () => {
       .toBeCalledWith(useCaseParam.threadId);
 
     expect(mockReplyRepository.getRepliesByCommentIds)
-      .toBeCalledWith(mockThreadComments.map(({ id }) => id));
+      .toBeCalledWith(mockThreadComments.map(({ id }) => `${id}`).join(', '));
 
     expect(mockThreadRepository.getThreadById)
       .toHaveBeenCalledWith(useCaseParam.threadId);

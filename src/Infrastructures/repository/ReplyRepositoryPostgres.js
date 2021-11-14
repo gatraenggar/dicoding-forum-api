@@ -43,8 +43,6 @@ class ReplyRepositoryPostgres extends ReplyRepository {
   }
 
   async getRepliesByCommentIds(commentIds) {
-    const idString = commentIds.map((id) => `${id}`).join(', ');
-
     const query = {
       text: `SELECT replies.id, username, content, comment, created_at, is_deleted
              FROM replies
@@ -52,7 +50,7 @@ class ReplyRepositoryPostgres extends ReplyRepository {
              ON replies.owner = users.id
              WHERE comment IN ($1)
              ORDER BY created_at ASC`,
-      values: [idString],
+      values: [commentIds],
     };
 
     const result = await this._pool.query(query);

@@ -184,8 +184,10 @@ describe('ThreadRepositoryPostgres', () => {
       };
       await RepliesTableTestHelper.addReply(reply2);
 
+      const commentIds = [comment].map(({ id: commentId }) => `${commentId}`).join(', ');
+
       const replyRepositoryPostgres = new ReplyRepositoryPostgres(pool, {});
-      const commentReplies = await replyRepositoryPostgres.getRepliesByCommentIds([comment.id]);
+      const commentReplies = await replyRepositoryPostgres.getRepliesByCommentIds(commentIds);
 
       expect(commentReplies).toStrictEqual([
         {

@@ -180,7 +180,8 @@ describe('CommentRepositoryPostgres', () => {
         thread: threadId,
         owner: commentator1.id,
         content: 'comment 1',
-        createdAt: '2021-11-12T07:22:33.555Z',
+        created_at: '2021-11-12T07:22:33.555Z',
+        is_deleted: false,
       };
       await CommentsTableTestHelper.addComment(comment1);
 
@@ -189,7 +190,7 @@ describe('CommentRepositoryPostgres', () => {
         thread: threadId,
         owner: commentator2.id,
         content: 'comment 22',
-        createdAt: '2021-08-08T08:45:33.555Z',
+        created_at: '2021-08-08T08:45:33.555Z',
         is_deleted: true,
       };
       await CommentsTableTestHelper.addComment(comment2);
@@ -198,20 +199,20 @@ describe('CommentRepositoryPostgres', () => {
       const threadComments = await commentRepositoryPostgres.getCommentsByThreadId(threadId);
 
       expect(threadComments).toStrictEqual([
-        new ThreadComment({
+        {
           id: comment2.id,
           username: commentator2.username,
-          date: comment2.createdAt,
-          content: '**komentar telah dihapus**',
-          replies: [],
-        }),
-        new ThreadComment({
+          content: comment2.content,
+          created_at: comment2.created_at,
+          is_deleted: comment2.is_deleted,
+        },
+        {
           id: comment1.id,
           username: commentator1.username,
-          date: comment1.createdAt,
           content: comment1.content,
-          replies: [],
-        }),
+          created_at: comment1.created_at,
+          is_deleted: comment1.is_deleted,
+        },
       ]);
     });
   });
