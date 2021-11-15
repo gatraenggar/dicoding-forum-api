@@ -7,12 +7,12 @@ const RepliesTableTestHelper = {
     owner = 'user-456',
     comment = 'comment-245',
     content = 'Dicoding mendukung Indonesia lebih maju berteknologi!',
-    createdAt = '2021-08-08T07:22:33.555Z',
+    created_at = '2021-08-08T07:22:33.555Z',
     is_deleted = false,
   }) {
     const query = {
       text: 'INSERT INTO replies VALUES($1, $2, $3, $4, $5, $6)',
-      values: [id, owner, comment, content, createdAt, is_deleted],
+      values: [id, owner, comment, content, created_at, is_deleted],
     };
 
     await pool.query(query);

@@ -169,8 +169,10 @@ describe('ThreadRepositoryPostgres', () => {
         id: 'reply-23462364',
         comment: comment.id,
         owner: commentator1.id,
+        username: commentator1.username,
         content: 'comment 1',
-        createdAt: '2021-11-12T07:22:33.555Z',
+        created_at: '2021-11-12T07:22:33.555Z',
+        is_deleted: false,
       };
       await RepliesTableTestHelper.addReply(reply1);
 
@@ -178,8 +180,9 @@ describe('ThreadRepositoryPostgres', () => {
         id: 'reply-475798',
         comment: comment.id,
         owner: commentator2.id,
+        username: commentator2.username,
         content: 'comment 22',
-        createdAt: '2021-08-08T08:45:33.555Z',
+        created_at: '2021-08-08T08:45:33.555Z',
         is_deleted: true,
       };
       await RepliesTableTestHelper.addReply(reply2);
@@ -191,20 +194,20 @@ describe('ThreadRepositoryPostgres', () => {
 
       expect(commentReplies).toStrictEqual([
         {
-          'comment-00099881837': [
-            new CommentReply({
-              id: reply2.id,
-              username: commentator2.username,
-              date: reply2.createdAt,
-              content: '**balasan telah dihapus**',
-            }),
-            new CommentReply({
-              id: reply1.id,
-              username: commentator1.username,
-              date: comment.createdAt,
-              content: comment.content,
-            }),
-          ],
+          id: reply2.id,
+          comment: reply2.comment,
+          username: reply2.username,
+          content: reply2.content,
+          created_at: reply2.created_at,
+          is_deleted: reply2.is_deleted,
+        },
+        {
+          id: reply1.id,
+          comment: reply1.comment,
+          username: reply1.username,
+          content: reply1.content,
+          created_at: reply1.created_at,
+          is_deleted: reply1.is_deleted,
         },
       ]);
     });

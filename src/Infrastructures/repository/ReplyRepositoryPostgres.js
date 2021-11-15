@@ -1,5 +1,4 @@
 const PostReply = require('../../Domains/replies/entities/PostReply');
-const CommentReply = require('../../Domains/replies/entities/CommentReply');
 const ReplyRepository = require('../../Domains/replies/ReplyRepository');
 const NotFoundError = require('../../Commons/exceptions/NotFoundError');
 const AuthorizationError = require('../../Commons/exceptions/AuthorizationError');
@@ -44,7 +43,15 @@ class ReplyRepositoryPostgres extends ReplyRepository {
 
   async getRepliesByCommentIds(commentIds) {
     const query = {
-      text: `SELECT replies.id, username, content, comment, created_at, is_deleted
+      text: `SELECT
+              replies.id,
+              username,
+              content,
+              comment,
+              TO_CHAR(
+                created_at AT TIME ZONE 'Etc/GMT4', 'YYYY-MM-DD"T"HH:MI:SS.MSZ'
+              ) as created_at,
+              is_deleted
              FROM replies
              LEFT JOIN users
              ON replies.owner = users.id
@@ -54,37 +61,8 @@ class ReplyRepositoryPostgres extends ReplyRepository {
     };
 
     const result = await this._pool.query(query);
-    const replies = [];
 
-    if (result.rows.length > 0) {
-      replies.push({});
-
-      result.rows.forEach(({ comment: commentId }) => {
-        if (!replies[0][commentId]) {
-          replies[0][commentId] = [];
-        }
-      });
-
-      result.rows.forEach(({
-        id,
-        username,
-        content,
-        comment: commentId,
-        created_at: createdAt,
-        is_deleted: isDeleted,
-      }) => {
-        replies[0][commentId].push(
-          new CommentReply({
-            id,
-            username,
-            content: isDeleted ? '**balasan telah dihapus**' : content,
-            date: new Date(new Date(createdAt).setHours(createdAt.getHours() + 8)).toISOString(),
-          }),
-        );
-      });
-    }
-
-    return replies;
+    return result.rows;
   }
 
   async deleteReply(replyId) {

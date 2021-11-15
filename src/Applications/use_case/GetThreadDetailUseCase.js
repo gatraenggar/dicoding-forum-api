@@ -1,5 +1,7 @@
+/* eslint-disable no-param-reassign */
 const ThreadDetail = require('../../Domains/threads/entities/ThreadDetail');
 const ThreadComment = require('../../Domains/comments/entities/ThreadComment');
+const CommentReply = require('../../Domains/replies/entities/CommentReply');
 
 class GetThreadDetailUseCase {
   constructor({ threadRepository, commentRepository, replyRepository }) {
@@ -26,14 +28,12 @@ class GetThreadDetailUseCase {
     const comments = this.mapComments(commentsByThreadId);
 
     const commentIds = this.stringifyCommentIds(comments);
-    const commentReplies = await this._replyRepository.getRepliesByCommentIds(commentIds);
+    const repliesByCommentIds = await this._replyRepository.getRepliesByCommentIds(commentIds);
+    const replies = this.mapReplies(repliesByCommentIds);
 
-    if (commentReplies.length > 0) {
-      comments.forEach((comment) => {
-        // eslint-disable-next-line no-param-reassign
-        comment.replies = commentReplies[0][comment.id];
-      });
-    }
+    comments.forEach((comment) => {
+      comment.replies = replies[comment.id] ? replies[comment.id] : [];
+    });
 
     return new ThreadDetail({
       id,
@@ -59,6 +59,33 @@ class GetThreadDetailUseCase {
       content: is_deleted ? '**komentar telah dihapus**' : content,
       replies: [],
     }));
+  }
+
+  mapReplies(replies) {
+    const repliesMap = {};
+
+    if (replies.length > 0) {
+      replies.forEach(({
+        id,
+        username,
+        content,
+        is_deleted,
+        comment: commentId,
+        created_at: date,
+      }) => {
+        if (!repliesMap[commentId]) repliesMap[commentId] = [];
+
+        repliesMap[commentId].push(
+          new CommentReply({
+            id,
+            username,
+            date,
+            content: is_deleted ? '**balasan telah dihapus**' : content,
+          }),
+        );
+      });
+    }
+    return repliesMap;
   }
 
   stringifyCommentIds(comments) {

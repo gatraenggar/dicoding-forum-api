@@ -33,25 +33,6 @@ describe('get thread detail use case', () => {
       created_at: '2021-08-08T07:19:09.775Z',
       username: 'dicoding',
     };
-    const mockCommentReplies = [
-      {
-        'comment-_pby2_tmXV6bcvcdev8xk': [
-          new CommentReply({
-            id: 'reply-BErOXUSefjwWGW1Z10Ihk',
-            content: '**balasan telah dihapus**',
-            date: '2021-08-08T07:59:48.766Z',
-            username: 'johndoe',
-          }),
-          new CommentReply({
-            id: 'reply-xNBtm9HPR-492AeiimpfN',
-            content: 'sebuah balasan',
-            date: '2021-08-08T08:07:01.522Z',
-            username: 'dicoding',
-          }),
-        ],
-        'comment-yksuCoxM2s4MMrZJO-qVD': [],
-      },
-    ];
     const mockThreadComments = [
       {
         id: 'comment-_pby2_tmXV6bcvcdev8xk',
@@ -68,6 +49,24 @@ describe('get thread detail use case', () => {
         is_deleted: true,
       },
     ];
+    const mockCommentReplies = [
+      {
+        id: 'reply-xNBtm9HPR-492AeiimpfN',
+        comment: mockThreadComments[1].id,
+        username: 'dicoding',
+        content: 'sebuah balasan',
+        created_at: '2021-08-08T07:59:48.766Z',
+        is_deleted: false,
+      },
+      {
+        id: 'reply-BErOXUSefjwWGW1Z10Ihk',
+        comment: mockThreadComments[1].id,
+        username: 'johndoe',
+        content: '**balasan telah dihapus**',
+        created_at: '2021-08-08T08:07:01.522Z',
+        is_deleted: true,
+      },
+    ];
     const expectedThreadDetail = new ThreadDetail({
       id: 'thread-h_2FkLZhtgBKY2kh4CC02',
       title: 'sebuah thread',
@@ -80,14 +79,27 @@ describe('get thread detail use case', () => {
           username: mockThreadComments[0].username,
           date: mockThreadComments[0].created_at,
           content: mockThreadComments[0].content,
-          replies: mockCommentReplies[0][mockThreadComments[0].id],
+          replies: [],
         }),
         new ThreadComment({
           id: mockThreadComments[1].id,
           username: mockThreadComments[1].username,
           date: mockThreadComments[1].created_at,
           content: mockThreadComments[1].content,
-          replies: mockCommentReplies[0][mockThreadComments[1].id],
+          replies: [
+            new CommentReply({
+              id: mockCommentReplies[0].id,
+              username: mockCommentReplies[0].username,
+              date: mockCommentReplies[0].created_at,
+              content: mockCommentReplies[0].content,
+            }),
+            new CommentReply({
+              id: mockCommentReplies[1].id,
+              username: mockCommentReplies[1].username,
+              date: mockCommentReplies[1].created_at,
+              content: mockCommentReplies[1].content,
+            }),
+          ],
         }),
       ],
     });
