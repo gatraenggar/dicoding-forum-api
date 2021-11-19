@@ -49,7 +49,7 @@ class ReplyRepositoryPostgres extends ReplyRepository {
               content,
               comment,
               TO_CHAR(
-                created_at AT TIME ZONE 'Etc/GMT4', 'YYYY-MM-DD"T"HH:MI:SS.MSZ'
+                created_at, 'YYYY-MM-DD"T"HH:MI:SS.MSZ'
               ) as created_at,
               is_deleted
              FROM replies
