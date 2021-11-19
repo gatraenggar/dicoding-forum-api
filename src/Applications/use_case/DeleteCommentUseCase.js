@@ -1,11 +1,10 @@
 class DeleteCommentUseCase {
   constructor({ commentRepository, authenticationTokenManager }) {
     this._commentRepository = commentRepository;
-    this._authenticationTokenManager = authenticationTokenManager;
   }
 
   async execute(useCaseAuth, useCaseParam) {
-    const { id } = await this._authenticationTokenManager.decodePayload(useCaseAuth.artifacts.token);
+    const { id } = useCaseAuth;
 
     await this._commentRepository.verifyOwner({
       commentId: useCaseParam.commentId,

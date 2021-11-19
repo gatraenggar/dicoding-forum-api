@@ -11,7 +11,7 @@ class RepliesHandler {
 
   async postReplyHandler(request, h) {
     const addReplyUseCase = this._container.getInstance(AddReplyUseCase.name);
-    const addedReply = await addReplyUseCase.execute(request.payload, request.auth, request.params);
+    const addedReply = await addReplyUseCase.execute(request.payload, request.auth.credentials, request.params);
 
     const response = h.response({
       status: 'success',
@@ -25,7 +25,7 @@ class RepliesHandler {
 
   async deleteReplyHandler(request, h) {
     const deleteReplyUseCase = this._container.getInstance(DeleteReplyUseCase.name);
-    await deleteReplyUseCase.execute(request.auth, request.params);
+    await deleteReplyUseCase.execute(request.auth.credentials, request.params);
 
     const response = h.response({
       status: 'success',

@@ -1,13 +1,12 @@
 const PreThread = require('../../Domains/threads/entities/PreThread');
 
 class AddThreadUseCase {
-  constructor({ threadRepository, authenticationTokenManager }) {
+  constructor({ threadRepository }) {
     this._threadRepository = threadRepository;
-    this._authenticationTokenManager = authenticationTokenManager;
   }
 
   async execute(useCasePayload, useCaseAuth) {
-    const { id } = await this._authenticationTokenManager.decodePayload(useCaseAuth.artifacts.token);
+    const { id } = useCaseAuth;
 
     const thread = this._threadRepository.addThread(new PreThread({
       owner: id,

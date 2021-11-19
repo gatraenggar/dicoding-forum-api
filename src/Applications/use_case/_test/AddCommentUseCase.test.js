@@ -1,7 +1,6 @@
 const AddCommentUseCase = require('../AddCommentUseCase');
 const PreComment = require('../../../Domains/comments/entities/PreComment');
 const PostComment = require('../../../Domains/comments/entities/PostComment');
-const AuthenticationTokenManager = require('../../security/AuthenticationTokenManager');
 const CommentRepository = require('../../../Domains/comments/CommentRepository');
 const ThreadRepository = require('../../../Domains/threads/ThreadRepository');
 
@@ -11,29 +10,19 @@ describe('add comment use case', () => {
       content: 'Try and error',
     };
     const useCaseAuth = {
-      artifacts: {
-        token: 'access_token',
-      },
+      id: 'user-123',
     };
     const useCaseParam = {
       threadId: 'thread-123',
     };
-    const decodedAuth = {
-      username: 'oredoo',
-      id: 'user-345',
-    };
     const expectedComment = new PostComment({
       id: 'comment-123',
-      owner: decodedAuth.id,
+      owner: useCaseAuth.id,
       content: useCasePayload.content,
     });
 
-    const mockAuthenticationTokenManager = new AuthenticationTokenManager();
     const mockCommentRepository = new CommentRepository();
     const mockThreadRepository = new ThreadRepository();
-
-    mockAuthenticationTokenManager.decodePayload = jest.fn()
-      .mockImplementation(() => Promise.resolve(decodedAuth));
 
     mockThreadRepository.verifyAvailableThread = jest.fn()
       .mockImplementation(() => Promise.resolve());
@@ -44,16 +33,13 @@ describe('add comment use case', () => {
     const addCommentUseCase = new AddCommentUseCase({
       commentRepository: mockCommentRepository,
       threadRepository: mockThreadRepository,
-      authenticationTokenManager: mockAuthenticationTokenManager,
     });
 
     const comment = await addCommentUseCase.execute(useCasePayload, useCaseAuth, useCaseParam);
 
-    // eslint-disable-next-line max-len
-    expect(mockAuthenticationTokenManager.decodePayload).toBeCalledWith(useCaseAuth.artifacts.token);
     expect(mockThreadRepository.verifyAvailableThread).toBeCalledWith(useCaseParam.threadId);
     expect(mockCommentRepository.addComment).toBeCalledWith(new PreComment({
-      owner: decodedAuth.id,
+      owner: useCaseAuth.id,
       thread: useCaseParam.threadId,
       content: useCasePayload.content,
     }));
