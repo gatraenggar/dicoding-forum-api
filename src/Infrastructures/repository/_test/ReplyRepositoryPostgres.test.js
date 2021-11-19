@@ -171,7 +171,7 @@ describe('ThreadRepositoryPostgres', () => {
         owner: commentator1.id,
         username: commentator1.username,
         content: 'comment 1',
-        created_at: '2021-11-12T07:22:33.555Z',
+        created_at: '2021-11-12T07:23:08.555Z',
         is_deleted: false,
       };
       await RepliesTableTestHelper.addReply(reply1);
