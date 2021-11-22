@@ -38,7 +38,14 @@ class ThreadRepositoryPostgres extends ThreadRepository {
 
   async getThreadById(threadId) {
     const query = {
-      text: `SELECT threads.id, username, title, body, created_at
+      text: `SELECT 
+              threads.id,
+              username,
+              title,
+              body,
+              TO_CHAR(
+                created_at, 'YYYY-MM-DD"T"HH:MI:SS.MSZ'
+              ) as created_at
              FROM threads
              JOIN users ON threads.owner = users.id
              WHERE threads.id = $1`,
@@ -50,12 +57,7 @@ class ThreadRepositoryPostgres extends ThreadRepository {
       throw new NotFoundError('thread tidak ditemukan');
     }
 
-    return {
-      ...result.rows[0],
-      created_at: new Date(new Date(result.rows[0].created_at)
-        .setHours(result.rows[0].created_at.getHours() + 8))
-        .toISOString(),
-    };
+    return result.rows[0];
   }
 }
 
