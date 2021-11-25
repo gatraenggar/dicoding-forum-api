@@ -10,6 +10,7 @@ const pool = require('../../database/postgres/pool');
 describe('ThreadRepositoryPostgres', () => {
   afterEach(async () => {
     await ThreadsTableTestHelper.cleanTable();
+    await UsersTableTestHelper.cleanTable();
   });
 
   afterAll(async () => {
