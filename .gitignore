@@ -1,6 +1,7 @@
-node_modules
-package-lock.json
+.env
 .idea
 config/database/test.json
 coverage
 forum-api-app-server.pem
+node_modules
+package-lock.json
