@@ -1,6 +1,5 @@
 const PreComment = require('../../../Domains/comments/entities/PreComment');
 const PostComment = require('../../../Domains/comments/entities/PostComment');
-const ThreadComment = require('../../../Domains/comments/entities/ThreadComment');
 const CommentRepositoryPostgres = require('../CommentRepositoryPostgres');
 const CommentsTableTestHelper = require('../../../../tests/CommentsTableTestHelper');
 const UsersTableTestHelper = require('../../../../tests/UsersTableTestHelper');
@@ -12,6 +11,8 @@ const NotFoundError = require('../../../Commons/exceptions/NotFoundError');
 describe('CommentRepositoryPostgres', () => {
   afterEach(async () => {
     await CommentsTableTestHelper.cleanTable();
+    await ThreadsTableTestHelper.cleanTable();
+    await UsersTableTestHelper.cleanTable();
   });
 
   afterAll(async () => {
