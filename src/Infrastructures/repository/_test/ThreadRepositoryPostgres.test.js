@@ -59,7 +59,7 @@ describe('ThreadRepositoryPostgres', () => {
     it('should return the thread correctly', async () => {
       await UsersTableTestHelper.addUser({ id: 'user-12345', username: 'tester2' });
       const userRepositoryPostgres = new UserRepositoryPostgres(pool, {});
-      const userId = await userRepositoryPostgres.getIdByUsername('tester');
+      const userId = await userRepositoryPostgres.getIdByUsername('tester2');
 
       const preThread = new PreThread({
         owner: userId,
