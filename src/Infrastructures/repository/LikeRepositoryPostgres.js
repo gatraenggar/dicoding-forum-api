@@ -34,6 +34,21 @@ class LikeRepositoryPostgres extends LikeRepository {
 
     await this._pool.query(setLikes);
   }
+
+  async countCommentLikes(commentIds) {
+    const query = {
+      text: `SELECT comment, CAST(COUNT(id) AS int)
+             FROM likes
+             WHERE comment IN (${commentIds.map((commentId, index) => `$${index + 1}`).join(', ')})
+             AND is_liked = true
+             GROUP BY comment`,
+      values: commentIds,
+    };
+
+    const { rows } = await this._pool.query(query);
+
+    return rows;
+  }
 }
 
 module.exports = LikeRepositoryPostgres;

@@ -6,6 +6,7 @@ class ThreadComment {
     username,
     date,
     content,
+    likeCount,
     replies,
   }) {
     if (!id || !username || !date || !content || !replies) {
@@ -17,6 +18,7 @@ class ThreadComment {
       || typeof username !== 'string'
       || typeof date !== 'string'
       || typeof content !== 'string'
+      || typeof likeCount !== 'number'
       || !Array.isArray(replies)
     ) {
       throw new Error('THREADCOMMENT.NOT_MEET_DATA_TYPE_SPECIFICATION');
@@ -34,6 +36,7 @@ class ThreadComment {
     this.username = username;
     this.date = date;
     this.content = content;
+    this.likeCount = likeCount;
     this.replies = replies;
   }
 }
