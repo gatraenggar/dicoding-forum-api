@@ -4,10 +4,16 @@ const ThreadComment = require('../../Domains/comments/entities/ThreadComment');
 const CommentReply = require('../../Domains/replies/entities/CommentReply');
 
 class GetThreadDetailUseCase {
-  constructor({ threadRepository, commentRepository, replyRepository }) {
+  constructor({
+    threadRepository,
+    commentRepository,
+    replyRepository,
+    likeRepository,
+  }) {
     this._threadRepository = threadRepository;
     this._commentRepository = commentRepository;
     this._replyRepository = replyRepository;
+    this._likeRepository = likeRepository;
   }
 
   async execute(useCaseParam) {
@@ -27,8 +33,16 @@ class GetThreadDetailUseCase {
     const commentsByThreadId = await this._commentRepository.getCommentsByThreadId(threadId);
     const comments = this.mapComments(commentsByThreadId);
 
-    const commentIds = this.stringifyCommentIds(comments);
-    const repliesByCommentIds = await this._replyRepository.getRepliesByCommentIds(commentIds);
+    const commentIds = comments.map(({ id: commentId }) => commentId);
+
+    const likesByCommentId = await this._likeRepository.countCommentLikes(commentIds);
+    const likes = this.mapLikes(likesByCommentId);
+
+    comments.forEach((comment) => {
+      comment.likeCount = likes[comment.id];
+    });
+
+    const repliesByCommentIds = await this._replyRepository.getRepliesByCommentIds(commentIds.join(', '));
     const replies = this.mapReplies(repliesByCommentIds);
 
     comments.forEach((comment) => {
@@ -57,8 +71,19 @@ class GetThreadDetailUseCase {
       username: commentatorUsername,
       date: commentCreatedAt,
       content: is_deleted ? '**komentar telah dihapus**' : content,
+      likeCount: 0,
       replies: [],
     }));
+  }
+
+  mapLikes(likes) {
+    const likesMap = {};
+
+    likes.forEach(({ comment: commentId, count }) => {
+      likesMap[commentId] = count;
+    });
+
+    return likesMap;
   }
 
   mapReplies(replies) {
@@ -86,10 +111,6 @@ class GetThreadDetailUseCase {
       });
     }
     return repliesMap;
-  }
-
-  stringifyCommentIds(comments) {
-    return comments.map(({ id: commentId }) => `${commentId}`).join(', ');
   }
 }
 

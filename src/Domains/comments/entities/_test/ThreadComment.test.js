@@ -8,24 +8,28 @@ describe('a comment entity', () => {
       username: 'johndoe',
       date: '2021-08-08T07:22:33.555Z',
       content: 'sebuah comment',
+      likeCount: 2,
       replies: [],
     };
     const payload3 = {
       id: 'comment-_pby2_tmXV6bcvcdev8xk',
       date: '2021-08-08T07:22:33.555Z',
       content: 'sebuah comment',
+      likeCount: 2,
       replies: [],
     };
     const payload4 = {
       id: 'comment-_pby2_tmXV6bcvcdev8xk',
       username: 'johndoe',
       content: 'sebuah comment',
+      likeCount: 2,
       replies: [],
     };
     const payload5 = {
       id: 'comment-_pby2_tmXV6bcvcdev8xk',
       username: 'johndoe',
       date: '2021-08-08T07:22:33.555Z',
+      likeCount: 2,
       replies: [],
     };
     const payload6 = {
@@ -33,6 +37,7 @@ describe('a comment entity', () => {
       username: 'johndoe',
       date: '2021-08-08T07:22:33.555Z',
       content: 'sebuah comment',
+      likeCount: 2,
     };
 
     expect(() => new ThreadComment(payload1)).toThrowError('THREADCOMMENT.NOT_CONTAIN_NEEDED_PROPERTY');
@@ -49,6 +54,7 @@ describe('a comment entity', () => {
       username: 'johndoe',
       date: '2021-08-08T07:22:33.555Z',
       content: '',
+      likeCount: 2,
       replies: [],
     };
 
@@ -61,6 +67,7 @@ describe('a comment entity', () => {
       username: 'johndoe',
       date: '2021-08-08T07:22:33.555Z',
       content: 'Slow and steadily win the race',
+      likeCount: 2,
       replies: [],
     };
 
@@ -73,6 +80,7 @@ describe('a comment entity', () => {
       username: '',
       date: '2021-08-08T07:22:33.555Z',
       content: 'Slow and steadily win the race',
+      likeCount: 2,
       replies: [],
     };
 
@@ -85,6 +93,7 @@ describe('a comment entity', () => {
       username: 'johndoe',
       date: '2021-08-08T07:22:33.555Z',
       content: 'sebuah comment',
+      likeCount: 2,
       replies: [],
     };
     const payload2 = {
@@ -92,6 +101,7 @@ describe('a comment entity', () => {
       username: ['johndoe'],
       date: '2021-08-08T07:22:33.555Z',
       content: 'sebuah comment',
+      likeCount: 2,
       replies: [],
     };
     const payload3 = {
@@ -99,6 +109,7 @@ describe('a comment entity', () => {
       username: 'johndoe',
       date: 1998,
       content: 'sebuah comment',
+      likeCount: 2,
       replies: [],
     };
     const payload4 = {
@@ -106,6 +117,7 @@ describe('a comment entity', () => {
       username: 'johndoe',
       date: '2021-08-08T07:22:33.555Z',
       content: { data: 'sebuah comment' },
+      likeCount: 2,
       replies: [],
     };
     const payload5 = {
@@ -113,6 +125,7 @@ describe('a comment entity', () => {
       username: 'johndoe',
       date: '2021-08-08T07:22:33.555Z',
       content: 'sebuah comment',
+      likeCount: 2,
       replies: {},
     };
     const payload6 = {
@@ -120,9 +133,18 @@ describe('a comment entity', () => {
       username: 'johndoe',
       date: '2021-08-08T07:22:33.555Z',
       content: 'sebuah comment',
+      likeCount: 2,
       replies: [
         new Date(),
       ],
+    };
+    const payload7 = {
+      id: 'comment-_pby2_tmXV6bcvcdev8xk',
+      username: 'johndoe',
+      date: '2021-08-08T07:22:33.555Z',
+      content: 'sebuah comment',
+      likeCount: [],
+      replies: [],
     };
 
     expect(() => new ThreadComment(payload1)).toThrowError('THREADCOMMENT.NOT_MEET_DATA_TYPE_SPECIFICATION');
@@ -131,6 +153,7 @@ describe('a comment entity', () => {
     expect(() => new ThreadComment(payload4)).toThrowError('THREADCOMMENT.NOT_MEET_DATA_TYPE_SPECIFICATION');
     expect(() => new ThreadComment(payload5)).toThrowError('THREADCOMMENT.NOT_MEET_DATA_TYPE_SPECIFICATION');
     expect(() => new ThreadComment(payload6)).toThrowError('THREADCOMMENT.NOT_MEET_DATA_TYPE_SPECIFICATION');
+    expect(() => new ThreadComment(payload7)).toThrowError('THREADCOMMENT.NOT_MEET_DATA_TYPE_SPECIFICATION');
   });
 
   it('should create thread object correctly', () => {
@@ -139,6 +162,7 @@ describe('a comment entity', () => {
       username: 'johndoe',
       date: '2021-08-08T07:22:33.555Z',
       content: 'sebuah comment',
+      likeCount: 2,
       replies: [
         new CommentReply({
           id: 'reply-BErOXUSefjwWGW1Z10Ihk',
@@ -160,6 +184,7 @@ describe('a comment entity', () => {
       username,
       content,
       date,
+      likeCount,
       replies,
     } = new ThreadComment(payload);
 
@@ -167,6 +192,7 @@ describe('a comment entity', () => {
     expect(username).toEqual(payload.username);
     expect(content).toEqual(payload.content);
     expect(date).toEqual(payload.date);
+    expect(likeCount).toEqual(payload.likeCount);
     expect(replies).toEqual(payload.replies);
   });
 });
